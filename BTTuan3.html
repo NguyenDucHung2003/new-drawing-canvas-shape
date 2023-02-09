@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nguyễn Đức Hùng-715105099</title>
+    <script>
+      let canvas;
+      let graphics;
+      let positionX = 0;
+      function draw() {
+        graphics.beginPath();
+        graphics.lineWidth = 5;
+        graphics.moveTo(500, 400);
+        graphics.lineTo(100, 400);
+        graphics.stroke();
+        graphics.closePath();
+        graphics.beginPath();
+        graphics.lineWidth = 10;
+        graphics.fillStyle = "#EEEE00";
+        graphics.rotate((Math.PI / 180) * 30);
+        graphics.translate(150, -130);
+        graphics.moveTo(350, 200);
+        for (let i = 1; i < 6; i++) {
+          let angle = ((2 * Math.PI) / 6) * i;
+          let x = 250 + 100 * Math.cos(angle);
+          let y = 200 + 100 * Math.sin(angle);
+          graphics.lineTo(x, y);
+        }
+        graphics.closePath();
+        graphics.stroke();
+        graphics.fill();
+        graphics.beginPath();
+        graphics.fillStyle = "#AEEEEE";
+        graphics.ellipse(350, 400, 60, 125, Math.PI / 3.05, 0, 2 * Math.PI);
+        graphics.stroke();
+        graphics.fill();
+        graphics.closePath();
+        graphics.beginPath();
+
+        graphics.font = "40px serif";
+        graphics.translate(-20, 50);
+        graphics.rotate((Math.PI / 180) * -29.7);
+        graphics.fillStyle = "black";
+        graphics.fillText("715105099", 60, 505);
+        graphics.closePath();
+      }
+      function init() {
+        canvas = document.getElementById("theCanvas");
+        graphics = canvas.getContext("2d");
+        draw();
+      }
+
+      window.onload = init;
+    </script>
+  </head>
+  <body>
+    <canvas id="theCanvas" width="600px" height="580px"> </canvas>
+  </body>
+</html>
