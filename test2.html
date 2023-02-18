@@ -1,1 +1,69 @@
-xin chao 123
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+  </body>
+  <script type="text/JavaScript">
+    x=150;
+    y=150;
+    clock=document.getElementById("canvas");
+    ctx=clock.getContext("2d");
+
+    function loop()
+    {
+    time=new Date();
+    h=time.getHours();
+    m=time.getMinutes();
+    s=time.getSeconds();
+
+    ctx.beginPath();
+    ctx.fillStyle="white";
+    ctx.arc(x,y,140,0,Math.PI*2,true);
+    ctx.fill();
+    ctx.strokeStyle="red";
+    ctx.lineWidth=10;
+    ctx.stroke();
+    drawNumber();
+    drawPointer(360*(h/12)+(m/60)*30-90,70,"black",10);
+    drawPointer(360*(m/60)+(s/60)*6-90,100,"black",10);
+    drawPointer(360*(s/60)+x-90,120,"black",2);
+    }
+
+    function drawNumber()
+    {
+    for(n=0;n<12;n++)
+    {
+    d=-60;
+    num = new Number(n+1);
+    str = num.toString();
+    dd = Math.PI/180*(d+n*30);
+    tx = Math.cos(dd)*120+140;
+    ty = Math.sin(dd)*120+160;
+    ctx.font = "26px Verdana";
+    ctx.fillStyle = "brown";
+    ctx.fillText(str, tx, ty);
+    }
+    }
+
+    function drawPointer(deg,len,color,w)
+    {
+    rad=(Math.PI/180*deg);
+    x1=x+Math.cos(rad)*len;
+    y1=y+Math.sin(rad)*len;
+
+    ctx.beginPath();
+    ctx.strokeStyle=color;
+    ctx.lineWidth=w;
+    ctx.moveTo(x,y);
+    ctx.lineTo(x1,y1);
+    ctx.stroke();
+    }
+    setInterval(loop,500);
+  </script>
+</html>

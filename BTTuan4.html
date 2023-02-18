@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="theCanvas"
+      width="600px"
+      height="600px"
+      style="border: 1px solid red"
+    >
+    </canvas>
+  </body>
+  <script>
+    let canvas;
+    let graphics;
+
+    function draw() {
+      // ve hinh tron
+      graphics.beginPath();
+      graphics.lineWidth = 10;
+      graphics.arc(300, 300, 200, 0, 2 * Math.PI);
+      graphics.stroke();
+      graphics.closePath();
+      // ve net
+      graphics.beginPath();
+      graphics.lineWidth = 2;
+      for (let i = 1; i < 13; i++) {
+        let r;
+        r = (i * Math.PI) / 6;
+        let x = 300 + 100 * Math.cos(r);
+        let y = 285 + 100 * Math.sin(r);
+        graphics.rotate(r);
+        graphics.translate(0, -150);
+        graphics.rotate(-r);
+        if (i == 1) {
+          graphics.moveTo(x - 22, y + 10);
+          graphics.lineTo(x, y - 5);
+        }
+        if (i == 2) {
+          graphics.moveTo(x - 17, y);
+          graphics.lineTo(x + 10, y);
+        }
+        if (i == 3) {
+          graphics.moveTo(x + 12, y + 10);
+          graphics.lineTo(x - 7, y - 8);
+        }
+        if (i == 4) {
+          graphics.moveTo(x + 10, y + 20);
+          graphics.lineTo(x, y);
+        }
+        if (i == 5) {
+          graphics.moveTo(x + 10, y + 20);
+          graphics.lineTo(x + 10, y);
+        }
+        if (i == 6) {
+          graphics.moveTo(x, y + 20);
+          graphics.lineTo(x + 15, y);
+        }
+        if (i == 7) {
+          graphics.moveTo(x - 10, y + 10);
+          graphics.lineTo(x + 15, y);
+        }
+        if (i == 8) {
+          graphics.moveTo(x + 16, y + 25);
+          graphics.lineTo(x - 10, y + 25);
+        }
+        if (i == 9) {
+          graphics.moveTo(x + 8, y + 20);
+          graphics.lineTo(x - 10, y + 10);
+        }
+        if (i == 10) {
+          graphics.moveTo(x + 5, y + 25);
+          graphics.lineTo(x - 5, y + 8);
+        }
+        if (i == 11) {
+          graphics.moveTo(x, y + 25);
+          graphics.lineTo(x, y + 5);
+        }
+        if (i == 12) {
+          graphics.moveTo(x - 15, y + 20);
+          graphics.lineTo(x - 2, y + 5);
+        }
+        graphics.rotate(r);
+        graphics.translate(0, 150);
+        graphics.rotate(-r);
+      }
+      graphics.stroke();
+      graphics.closePath();
+      // ve tam
+      graphics.beginPath();
+      graphics.arc(300, 300, 5, 0, 2 * Math.PI);
+      graphics.stroke();
+      graphics.fill();
+      graphics.closePath();
+      /// ve so
+      graphics.beginPath();
+      let ang;
+      let num;
+      graphics.font = 40 + "px arial";
+      graphics.textBaseline = "middle";
+      graphics.textAlign = "center";
+      for (num = 1; num < 13; num++) {
+        ang = (num * Math.PI) / 6;
+        graphics.rotate(ang);
+        graphics.translate(0, -140);
+        graphics.rotate(-ang);
+        graphics.fillText(num.toString(), 300, 300);
+        graphics.rotate(ang);
+        graphics.translate(0, 140);
+        graphics.rotate(-ang);
+      }
+
+      graphics.stroke();
+      // //kim dong ho
+      // //kim giay
+      // graphics.beginPath();
+      // graphics.moveTo(300, 300);
+      // graphics.lineTo(300, 500);
+      // graphics.stroke();
+      // graphics.closePath();
+      // //kim phut
+      // graphics.beginPath();
+      // graphics.moveTo(300, 300);
+      // graphics.lineTo(300, 450);
+      // graphics.lineWidth = 10;
+      // graphics.stroke();
+      // graphics.closePath();
+      // //kim gio
+      // graphics.beginPath();
+      // graphics.moveTo(300, 300);
+      // graphics.lineTo(300, 400);
+      // graphics.stroke();
+      // graphics.closePath();
+    }
+    function Time() {
+      let now = new Date();
+      let hour = now.getHours();
+      let minute = now.getMinutes();
+      let second = now.getSeconds();
+      // graphics.save();
+      hour = hour % 12;
+      hour =
+        (hour * Math.PI) / 6 +
+        (minute * Math.PI) / (6 * 60) +
+        (second * Math.PI) / (360 * 60);
+      drawHand(graphics, hour, 180, 180);
+
+      minute = (minute * Math.PI) / 30 + (second * Math.PI) / (30 * 60);
+      drawHand(graphics, minute, 190, 190);
+
+      second = (second * Math.PI) / 30;
+      drawHand(graphics, second, 200, 200);
+      // graphics.restore();
+    }
+    function drawHand(graphics, pos, length, width) {
+      graphics.beginPath();
+      graphics.lineWidth = 5;
+      graphics.lineCap = "round";
+      graphics.moveTo(300, 300);
+      graphics.rotate(pos);
+      graphics.lineTo(300, 300);
+      graphics.rotate(-pos);
+      graphics.stroke();
+    }
+    function init() {
+      canvas = document.getElementById("theCanvas");
+      graphics = canvas.getContext("2d");
+      Time();
+      draw();
+    }
+
+    window.onload = init;
+    setInterval(init, 1000);
+  </script>
+</html>

@@ -1,1 +1,137 @@
-Xin chao cac ban
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas
+      id="theCanvas"
+      width="600px"
+      height="600px"
+      style="border: 1px solid red"
+    >
+    </canvas>
+  </body>
+  <script>
+    let canvas;
+    let graphics;
+    function hinhtron() {
+      graphics.beginPath();
+      graphics.lineWidth = 10;
+      graphics.arc(300, 300, 200, 0, 2 * Math.PI);
+      graphics.stroke();
+      graphics.closePath();
+      // tam hinh tron
+      graphics.beginPath();
+      graphics.arc(300, 300, 5, 0, 2 * Math.PI);
+      graphics.stroke();
+      graphics.fill();
+      graphics.closePath();
+    }
+    function number() {
+      let deg;
+      let num;
+      graphics.beginPath();
+      graphics.font = 40 + "px arial";
+      graphics.textBaseline = "middle";
+      graphics.textAlign = "center";
+      for (num = 1; num < 13; num++) {
+        deg = (num * Math.PI) / 6;
+        graphics.rotate(deg);
+        graphics.translate(0, -153);
+        graphics.rotate(-deg);
+        graphics.fillText(num.toString(), 300, 300);
+        graphics.rotate(deg);
+        graphics.translate(0, 153);
+        graphics.rotate(-deg);
+      }
+      graphics.stroke();
+    }
+    function vanh() {
+      graphics.lineWidth = 3;
+      graphics.textBaseline = "middle";
+      graphics.textAlign = "center";
+      graphics.beginPath();
+      graphics.strokeStyle = "red";
+      for (let i = 0; i < 60; i++) {
+        let angle = (6 * i * Math.PI) / 180;
+        let x = 300 + 10 * Math.cos(angle);
+        let y = 300 + 10 * Math.sin(angle);
+        if (i % 5 === 0) {
+          let x = 300 + 30 * Math.cos(angle);
+          let y = 300 + 30 * Math.sin(angle);
+          if (angle <= (Math.PI / 180) * 360) {
+            graphics.rotate(angle);
+            graphics.translate(170, 0);
+            graphics.rotate(-angle);
+            graphics.moveTo(300, 300);
+            graphics.lineTo(x, y);
+            graphics.rotate(angle);
+            graphics.translate(-170, 0);
+            graphics.rotate(-angle);
+          }
+        }
+        graphics.strokeStyle = "black";
+        if (i % 5 !== 0) {
+          if (angle <= (Math.PI / 180) * 360) {
+            graphics.rotate(angle);
+            graphics.translate(170, 0);
+            graphics.rotate(-angle);
+            graphics.moveTo(300, 300);
+            graphics.lineTo(x, y);
+            graphics.rotate(angle);
+            graphics.translate(-170, 0);
+            graphics.rotate(-angle);
+          }
+        }
+      }
+      graphics.stroke();
+    }
+
+    // function vekim(graphics, pos, length, width) {
+    //   graphics.beginPath();
+    //   graphics.lineWidth = 5;
+    //   graphics.lineCap = "round";
+    //   graphics.moveTo(300, 300);
+    //   graphics.rotate(pos);
+    //   graphics.lineTo(300, 300);
+    //   graphics.rotate(-pos);
+    //   graphics.stroke();
+    // }
+    // function Time() {
+    //   let now = new Date();
+    //   let hour = now.getHours();
+    //   let minute = now.getMinutes();
+    //   let second = now.getSeconds();
+    //   hour = hour % 12;
+    //   hour =
+    //     (hour * Math.PI) / 6 +
+    //     (minute * Math.PI) / (6 * 60) +
+    //     (second * Math.PI) / (360 * 60);
+    //   vekim(graphics, hour, 180, 180);
+
+    //   minute = (minute * Math.PI) / 30 + (second * Math.PI) / (30 * 60);
+    //   vekim(graphics, minute, 190, 190);
+
+    //   second = (second * Math.PI) / 30;
+    //   vekim(graphics, second, 200, 200);
+    // }
+
+    function draw() {}
+    function init() {
+      canvas = document.getElementById("theCanvas");
+      graphics = canvas.getContext("2d");
+      //   Time();
+      hinhtron();
+      number();
+      vanh();
+      draw();
+    }
+
+    window.onload = init;
+    // setInterval(init, 1000);
+  </script>
+</html>
