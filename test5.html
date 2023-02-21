@@ -20,11 +20,11 @@
     let graphics;
     function hinhtron() {
       graphics.beginPath();
+      graphics.strokeStyle = "black";
       graphics.lineWidth = 10;
       graphics.arc(300, 300, 200, 0, 2 * Math.PI);
       graphics.stroke();
       graphics.closePath();
-      // tam hinh tron
       graphics.beginPath();
       graphics.arc(300, 300, 5, 0, 2 * Math.PI);
       graphics.stroke();
@@ -41,11 +41,11 @@
       for (num = 1; num < 13; num++) {
         deg = (num * Math.PI) / 6;
         graphics.rotate(deg);
-        graphics.translate(0, -153);
+        graphics.translate(0, -150);
         graphics.rotate(-deg);
         graphics.fillText(num.toString(), 300, 300);
         graphics.rotate(deg);
-        graphics.translate(0, 153);
+        graphics.translate(0, 150);
         graphics.rotate(-deg);
       }
       graphics.stroke();
@@ -55,7 +55,7 @@
       graphics.textBaseline = "middle";
       graphics.textAlign = "center";
       graphics.beginPath();
-      graphics.strokeStyle = "red";
+      graphics.strokeStyle = "black";
       for (let i = 0; i < 60; i++) {
         let angle = (6 * i * Math.PI) / 180;
         let x = 300 + 10 * Math.cos(angle);
@@ -63,6 +63,7 @@
         if (i % 5 === 0) {
           let x = 300 + 30 * Math.cos(angle);
           let y = 300 + 30 * Math.sin(angle);
+
           if (angle <= (Math.PI / 180) * 360) {
             graphics.rotate(angle);
             graphics.translate(170, 0);
@@ -73,9 +74,7 @@
             graphics.translate(-170, 0);
             graphics.rotate(-angle);
           }
-        }
-        graphics.strokeStyle = "black";
-        if (i % 5 !== 0) {
+        } else {
           if (angle <= (Math.PI / 180) * 360) {
             graphics.rotate(angle);
             graphics.translate(170, 0);
@@ -88,50 +87,51 @@
           }
         }
       }
+
+      graphics.stroke();
+    }
+    function vekim(x1, y1, lineWidth, color) {
+      graphics.beginPath();
+      graphics.lineCap = "round";
+      if (color) graphics.strokeStyle = color;
+      graphics.lineWidth = lineWidth;
+      graphics.moveTo(300, 300);
+      graphics.lineTo(x1, y1);
+      graphics.closePath();
       graphics.stroke();
     }
 
-    // function vekim(graphics, pos, length, width) {
-    //   graphics.beginPath();
-    //   graphics.lineWidth = 5;
-    //   graphics.lineCap = "round";
-    //   graphics.moveTo(300, 300);
-    //   graphics.rotate(pos);
-    //   graphics.lineTo(300, 300);
-    //   graphics.rotate(-pos);
-    //   graphics.stroke();
-    // }
-    // function Time() {
-    //   let now = new Date();
-    //   let hour = now.getHours();
-    //   let minute = now.getMinutes();
-    //   let second = now.getSeconds();
-    //   hour = hour % 12;
-    //   hour =
-    //     (hour * Math.PI) / 6 +
-    //     (minute * Math.PI) / (6 * 60) +
-    //     (second * Math.PI) / (360 * 60);
-    //   vekim(graphics, hour, 180, 180);
-
-    //   minute = (minute * Math.PI) / 30 + (second * Math.PI) / (30 * 60);
-    //   vekim(graphics, minute, 190, 190);
-
-    //   second = (second * Math.PI) / 30;
-    //   vekim(graphics, second, 200, 200);
-    // }
-
-    function draw() {}
+    let canvas2 = document.getElementById("theCanvas");
+    canvas2.style.position = "absolute";
+    graphics = canvas2.getContext("2d");
+    function Time() {
+      graphics.clearRect(0, 0, 600, 600);
+      let now = new Date();
+      let hour = now.getHours();
+      let minute = now.getMinutes();
+      let second = now.getSeconds();
+      let hourAngle = (hour % 12) * 30 + minute / 2 + second / 120;
+      let minuteAngle = minute * 6 + second / 10;
+      let secondAngle = second * 6;
+      let hourX = 300 + Math.sin(hourAngle * (Math.PI / 180)) * 100;
+      let hourY = 300 - Math.cos(hourAngle * (Math.PI / 180)) * 100;
+      let minuteX = 300 + Math.sin(minuteAngle * (Math.PI / 180)) * 140;
+      let minuteY = 300 - Math.cos(minuteAngle * (Math.PI / 180)) * 140;
+      let secondX = 300 + Math.sin(secondAngle * (Math.PI / 180)) * 160;
+      let secondY = 300 - Math.cos(secondAngle * (Math.PI / 180)) * 160;
+      vekim(hourX, hourY, 6, "black");
+      vekim(minuteX, minuteY, 4, "black");
+      vekim(secondX, secondY, 2, "red");
+    }
     function init() {
       canvas = document.getElementById("theCanvas");
       graphics = canvas.getContext("2d");
-      //   Time();
+      Time();
       hinhtron();
-      number();
       vanh();
-      draw();
+      number();
     }
-
     window.onload = init;
-    // setInterval(init, 1000);
+    setInterval(init, 1000);
   </script>
 </html>
